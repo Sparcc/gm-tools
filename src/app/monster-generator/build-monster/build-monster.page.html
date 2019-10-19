@@ -1,0 +1,23 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/monster-builder"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Build Monster</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+      <ion-row>
+          <ion-col text-center size="12" offset-md="3" size-md="6">
+            <ion-button (click)="skillPicker()">Skill</ion-button>
+          </ion-col>
+        </ion-row>
+    <ion-row>
+      <ion-col text-center size="12" offset-md="3" size-md="6">
+        <ion-button (click)="perceptionPicker()">Perception</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
