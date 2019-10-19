@@ -1,5 +1,7 @@
 {
   "name": "gm-tools",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

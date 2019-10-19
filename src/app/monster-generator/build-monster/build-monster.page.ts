@@ -148,11 +148,11 @@ export class BuildMonsterPage implements OnInit {
       let game = await picker.getColumn('game');
       let cat = await picker.getColumn('category');
       let rating = await picker.getColumn('rating');
-      this.selected = [
+      /* this.selected = [
         game.options[game.selectedIndex].text, 
         cat.options[cat.selectedIndex].text,
         rating.options[rating.selectedIndex].text
-      ];
+      ]; */
     });
   }
 
