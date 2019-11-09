@@ -41,3 +41,8 @@ yarn-error.log
 
 android/
 www/
+
+# Ignore images and fonts
+.ttf
+.png
+.svg

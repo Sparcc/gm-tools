@@ -1,13 +1,28 @@
-interface range {
-  from: Number;
-  to: Number;
+export interface Range {
+  from: number;
+  to: number;
 }
 
-export class ScaleMatrix {
+export class MonsterValueRef {
+
+
+  readonly rarity = {
+    common: {label: 'Common', value: 'common'},
+    uncommon: {label: 'Uncommon', value: 'uncommon'},
+    rare: {label: 'Rare', value: 'rare'},
+    unique: {label: 'Unique', value: 'unique'}
+  };
+
+  readonly alignment = [
+    ['LG', 'NG', 'CG'],
+    ['LN', 'N', 'CN'],
+    ['LE', 'NE', 'CE']
+  ];
+
   // 1 - 24 ability mod +
-  public abilityMod = [
-    [-1, 0, 3, 2, 0],
-    [0, 0, 3, 2, 0],
+  readonly abilityMod = [
+    [-1, undefined, 3, 2, 0],
+    [0, undefined, 3, 2, 0],
     [1, 5, 4, 3, 1],
     [2, 5, 4, 3, 1],
     [3, 5, 4, 3, 1],
@@ -35,8 +50,8 @@ export class ScaleMatrix {
   ];
 
   // 1 - 24 perception mod +
-  public perception = [
-    [1, 9, 8, 5, 2, 0],
+  readonly perception = [
+    [-1, 9, 8, 5, 2, 0],
     [0, 10, 9, 6, 3, 1],
     [1, 11, 10, 7, 4, 2],
     [2, 12, 11, 8, 5, 3],
@@ -65,7 +80,7 @@ export class ScaleMatrix {
   ];
 
   // 1 - 24 skill mod +
-  public skills = [
+  readonly skills = [
     [-1, 8, 5, 4, 2],
     [0, 9, 6, 5, 3],
     [1, 10, 7, 6, 4],
@@ -95,7 +110,7 @@ export class ScaleMatrix {
   ];
 
   // 1 - 24 safe items (to determine non overpowered/expensive weapons)
-  public safeItems = [
+  readonly safeItems = [
     [1, "0"],
     [2, "0"],
     [3, "0"],
@@ -122,5 +137,103 @@ export class ScaleMatrix {
     [24, "20 (+3 major resilient armor)"]
   ];
 
-  constructor(public test: string) {}
+  constructor() {}
+
+  getScalingFromLevel(scaleMatrix, level, score){
+    let mappedLevel: number;
+    mappedLevel = this.getStartingIndexFromLevel(scaleMatrix, level);
+    let scaling = scaleMatrix[mappedLevel].slice(1).indexOf(score);
+    scaling++
+    if (scaling != 0) return scaling;
+  }
+
+  getStartingIndexFromLevel(scaleMatrix, level) {
+    let mappedLevel: number;
+    if (scaleMatrix[0][0] === -1){
+      mappedLevel = level + 1;
+    } else if (scaleMatrix[0][0] === 1){
+      mappedLevel = level - 1;
+    } else if (scaleMatrix[0][0] === 1){
+      mappedLevel = level;
+    } else {
+      throw "error trying to map start of scale matrix to an array index";
+    }
+    return mappedLevel;
+  }
+
+  getScalingLabelFromLevelScore(scaleMatrix, level: number, score: number){
+    let mappedLevel: number;
+    mappedLevel = this.getStartingIndexFromLevel(scaleMatrix, level);
+    let scaling = scaleMatrix[mappedLevel].slice(1).indexOf(score);
+    scaling++
+    if (scaling != 0) return this.getScalingLabel(scaling);
+  }
+
+  getScalingLabel(scaling: number){
+    switch (scaling){
+      case 1:
+        return 'Extreme';
+      case 2:
+        return 'High';
+      case 3:
+        return 'Moderate';
+      case 4:
+        return 'Low';
+      case 5:
+        return 'Terrible';
+      case 6:
+        return 'Abysmal';
+    }
+  }
+
+  getAbilityScore(level: number, scaling: number){
+    if (scaling === undefined) return this.getAbilityScoreForLevel(level);
+    let mappedLevel = level+1; //-1 is 0, 0 is 1
+    return this.abilityMod[mappedLevel][scaling];
+  }
+
+  getAbilityScoreForLevel(level: number){
+    let mappedLevel = level+1; //-1 is 0, 0 is 1
+    return this.abilityMod[mappedLevel];
+  }
+
+  getPerceptionScore(level: number, scaling: number){
+    if (scaling === undefined) return this.getPerceptionScoreForLevel(level);
+    let mappedLevel = level+1;
+    return this.perception[mappedLevel][scaling];
+  }
+
+  getPerceptionScoreForLevel(level: number){
+    let mappedLevel = level+1; //-1 is 0, 0 is 1
+    return this.perception[mappedLevel];
+  }
+
+  getSkillScore(level: number, scaling: number){
+    if (scaling === undefined) return this.getSkillScoreForLevel(level);
+    let mappedLevel = level+1;
+    return this.skills[mappedLevel][scaling];
+  }
+
+  getSkillScoreForLevel(level: number){
+    let mappedLevel = level+1; //-1 is 0, 0 is 1
+    return this.skills[mappedLevel];
+  }
+
+  getSafeIItem(level: number){
+    let mappedLevel = level-1; //1 is 0, 2 is 0
+    return this.safeItems[mappedLevel];
+  }
+
+  getRange(scaleMatrix){
+    let from = scaleMatrix[0][scaleMatrix[0].length-1]
+    let to = scaleMatrix[scaleMatrix.length-1][1];
+    to++;
+    if (from != undefined && to != undefined){
+      let range = {
+        from: from, // first terrible
+        to: to // last extreme
+      }
+      return range;
+    }
+  }
 }

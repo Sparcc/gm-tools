@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { ScaleMatrix } from './monster-gen.model';
+//import { ScaleMatrix } from './monster-gen.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class MonsterGeneratorService {
-  public scaleMatrix: ScaleMatrix;
+  //public scaleMatrix: ScaleMatrix;
 
   constructor() {
     

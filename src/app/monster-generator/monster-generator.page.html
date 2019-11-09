@@ -1,16 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-menu-button></ion-menu-button>
-    </ion-buttons>
-    <ion-title offset-md="3">Monster Generator </ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
-  <ion-refresher slot="fixed" pullFactor="0.5" pullMin="100" pullMax="200">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
   <ion-grid>
     <ion-row>
       <ion-col
@@ -19,7 +7,7 @@
         offset-md="3"
         size-md="6"
       >
-        <ion-button [routerLink]="['/', 'monster-generator', 'build-monster']">
+        <ion-button [routerLink]="['/', 'monster-generator', 'build-monster']" class="menu-btn">
           Build Monster
         </ion-button>
       </ion-col>
@@ -31,45 +19,22 @@
         offset-md="3"
         size-md="6"
       >
-        <ion-button>
+        <ion-button class="menu-btn">
           See Monsters
         </ion-button>
       </ion-col>
     </ion-row>
-  </ion-grid>
-
-  <ion-grid>
-      <ion-row>
-          <ion-col text-center
+    <ion-row>
+        <ion-col
+          text-center
           size="12"
           offset-md="3"
-          size-md="6">
-          <h1>Recently Used Monsters</h1>
-          </ion-col>
+          size-md="6"
+        >
+          <ion-button [routerLink]="['/', 'settings']" class="menu-btn">
+            Settings
+          </ion-button>
+        </ion-col>
       </ion-row>
-    <ion-row>
-      <ion-col text-center
-      size="12"
-      offset-md="3"
-      size-md="6">
-        <ion-list>
-          <ion-item>
-            <ion-label>Pokémon Yellow</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Mega Man X</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>The Legend of Zelda</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Pac-Man</ion-label>
-          </ion-item>
-          <ion-item>
-            <ion-label>Super Mario World</ion-label>
-          </ion-item>
-        </ion-list>
-      </ion-col>
-    </ion-row>
   </ion-grid>
 </ion-content>

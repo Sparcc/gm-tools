@@ -1,0 +1,37 @@
+@import "../../../theme/icons";
+.levelButton{
+  border-radius: 50%;
+}
+
+.input-group{
+  border: 2px solid #595959;
+  border-radius: 15px;
+/*   margin: 1px;
+  box-sizing:border-box; */
+}
+
+.picker-button-container{
+  float:left;
+}
+
+.picker-button-container.over-container{
+  clear: right;
+  width: 100%;
+}
+
+
+.picker-value-container.under-container {
+  float:none;
+  //box-sizing: border-box;
+}
+
+.test-text{
+    font-family: 'Babas Neue';
+}
+
+.alignment-btn{
+  background-color: #576394;
+/*   border: 3px solid #595959;
+  border-radius: 5px; */
+  margin: 2px;
+}
