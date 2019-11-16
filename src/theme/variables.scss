@@ -42,8 +42,8 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
   --ion-color-primary-rgb: 56, 128, 255;
   --ion-color-primary-contrast: #{$icon-menu-text};
   --ion-color-primary-contrast-rgb: 255, 255, 255;
-  --ion-color-primary-shade: #{$active-screen-btn-bg};
-  --ion-color-primary-tint: #{$active-screen-btn-bg};
+  --ion-color-primary-shade: #{$ui-bg};
+  --ion-color-primary-tint: #{$ui-bg};
 
   /** secondary **/
   --ion-color-secondary: #0cd1e8;

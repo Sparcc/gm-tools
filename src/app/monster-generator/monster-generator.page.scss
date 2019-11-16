@@ -1,3 +1,64 @@
-.menu-btn{
+.menu-btn {
   height: 70px;
+  width: 180px;
+}
+
+.home-screen {
+  background-color: blue;
+}
+
+.home-buttons {
+  position: relative;
+  z-index: 100;
+}
+
+.bm-body {
+  position: absolute;
+  z-index: 1;
+  width: 250px;
+  height: 100%;
+  
+  padding: 0px;
+
+  background: var(--ion-color-primary-shade);
+  //border-radius: 50%;
+  
+
+  /* position the div in center */
+  //position: absolute;
+  top: 35%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.bm-left{
+  position: absolute;
+  z-index: 10;
+  width: 0; 
+  height: 0; 
+  border-top: 120px solid transparent;
+  border-bottom: 50px solid transparent; 
+  z-index: 1;
+  border-right:130px solid var(--ion-color-primary-shade);
+  border-radius: 15px;
+
+  top: 96%;
+  left: 74%;
+  transform: translate(-50%, -50%);
+}
+
+.bm-right{
+  position: absolute;
+  z-index: 10;
+  width: 0; 
+  height: 0; 
+  border-top: 120px solid transparent;
+  border-bottom: 50px solid transparent; 
+  z-index: 1;
+  border-left:130px solid var(--ion-color-primary-shade);
+  border-radius: 15px;
+
+  top: 96%;
+  left: 26%;
+  transform: translate(-50%, -50%);
 }
