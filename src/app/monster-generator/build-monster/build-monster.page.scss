@@ -1,10 +1,17 @@
-@import "../../../theme/icons";
+mat-expansion-panel{
+  background-color: var(--ion-color-primary);
+}
+
+.mat-expansion-text {
+  color: var(--ion-color-primary-contrast);
+}
+
 .levelButton{
   border-radius: 50%;
 }
 
 .input-group{
-  border: 2px solid #595959;
+  border: 2px solid #949494;
   border-radius: 15px;
 /*   margin: 1px;
   box-sizing:border-box; */

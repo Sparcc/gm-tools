@@ -34,3 +34,7 @@
 .monster-picker-column {
   --background: rgb(230, 199, 191);
 } */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import "theme/icons";

@@ -1,5 +1,3 @@
-
-
 <ion-content class="home-screen">
   <!-- <ion-grid no-padding>
       <ion-row>
@@ -9,49 +7,53 @@
           </ion-col>
       </ion-row>
   </ion-grid> -->
-  <div class="bm-body"><!-- class="bm-body"> -->
-      <div class="bm-left"></div>
-      <div class="bm-right"></div>
-  </div>
+<!--   <div class="bm-body">
+    <div class="bm-left"></div>
+    <div class="bm-right"></div>
+  </div> -->
 
-  <div class="home-buttons">
+  <img class="bookmark-img" src="assets\img\bookmark.png">
+
+  <div class="home-buttons-container" text-center>
     <ion-grid>
+        <ion-row>
+            <ion-col>
+              <div class="menu-heading-container" text-center>
+                <h1 class="menu-heading">Pathfinder 2nd Edition Monster Manager</h1>
+              </div>
+            </ion-col>
+          </ion-row>
       <ion-row>
-        <ion-col
-          text-center
-          size="12"
-          offset-md="3"
-          size-md="6"
-        >
-          <ion-button [routerLink]="['/', 'monster-generator', 'build-monster']" class="menu-btn">
+        <ion-col text-center size="12" offset-md="3" size-md="6">
+          <!-- <ion-icon name="custom-level-btn"></ion-icon> -->
+          <ion-button class="home-button"
+            [routerLink]="['/', 'monster-generator', 'build-monster']"
+            class="home-button"
+          >
+          <img class="home-button-icon"src="assets\img\Build_Monster.png">
             Build Monster
           </ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col
-          text-center
-          size="12"
-          offset-md="3"
-          size-md="6"
-        >
-          <ion-button class="menu-btn">
-            See Monsters
+        <ion-col text-center size="12" offset-md="3" size-md="6">
+          <ion-button class="home-button">
+          <img class="home-button-icon"src="assets\img\Load_Monster.png">
+            Load Monster
           </ion-button>
         </ion-col>
       </ion-row>
       <ion-row>
-          <ion-col
-            text-center
-            size="12"
-            offset-md="3"
-            size-md="6"
-          >
-            <ion-button [routerLink]="['/', 'settings']" class="menu-btn">
-              Settings
-            </ion-button>
-          </ion-col>
-        </ion-row>
+        <ion-col size="12" offset-md="3" size-md="6">
+          <ion-button [routerLink]="['/', 'settings']" class="home-button">
+            <!-- <div class="button-group"> -->
+                <img class="home-button-icon"src="assets\img\Settings.png">
+               <!-- <ion-icon src="assets\img\Settings.png"></ion-icon> -->
+                Settings
+            <!-- </div> -->
+          </ion-button>
+        </ion-col>
+      </ion-row>
     </ion-grid>
   </div>
-  </ion-content>
+</ion-content>

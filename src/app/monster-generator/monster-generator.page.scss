@@ -1,15 +1,43 @@
-.menu-btn {
-  height: 70px;
-  width: 180px;
+.menu-heading-container{
+  padding-left: 50px;
+  padding-right: 50px;
 }
 
+.menu-heading{
+  color: var(--ion-color-primary-contrast);
+  margin: 0 auto;
+  max-width: 200px;
+  font-family: 'Babas Neue';
+  font-size: 40px;
+}
+
+ion-content{
+  --ion-background-color:#d5c1a8;
+}
+
+/* .menu-btn {
+  
+}
+ */
 .home-screen {
   background-color: blue;
 }
 
-.home-buttons {
+.home-buttons-container {
   position: relative;
   z-index: 100;
+}
+.home-button {
+  height: 70px;
+  width: 200px;
+  font-family: 'Babas Neue';
+  font-size: 25px;
+}
+
+.home-button-icon {
+  height: 50px;
+  width: 50px;
+  float:left;
 }
 
 .bm-body {
@@ -42,7 +70,7 @@
   border-right:130px solid var(--ion-color-primary-shade);
   border-radius: 15px;
 
-  top: 96%;
+  top: 94%;
   left: 74%;
   transform: translate(-50%, -50%);
 }
@@ -58,7 +86,24 @@
   border-left:130px solid var(--ion-color-primary-shade);
   border-radius: 15px;
 
-  top: 96%;
+  top: 94%;
   left: 26%;
+  transform: translate(-50%, -50%);
+}
+
+.bookmark-img {
+  position: absolute;
+  z-index: 1;
+  height: 110%;
+  width: 700px;
+  padding: 0px;
+  margin: 0px;
+
+  // Crop
+  object-fit: cover;
+
+  // Center
+  top: 50%;
+  left: 50%;
   transform: translate(-50%, -50%);
 }

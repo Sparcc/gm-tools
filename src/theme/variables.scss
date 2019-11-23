@@ -110,5 +110,6 @@ $app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
   --ion-color-light-tint: #f5f6f9;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+ion-content{
+  --ion-background-color:#e4e0dc;
+}
