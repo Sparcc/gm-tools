@@ -3,6 +3,23 @@ export interface Range {
   to: number;
 }
 
+export class Monster {
+  name: string;
+  template: {};
+  level: number;
+  alignment: string;
+  abilityMod: {};
+  perception: number;
+  skills: {}[];
+  ac: number;
+  hp: number;
+  savingThrows: number;
+  resistances: number;
+  attackBonus: number;
+  strikeBonus: number;
+  traits: {}[];
+}
+
 export class MonsterValueRef {
   readonly rarity = {
     common: { label: "Common", value: "common" },

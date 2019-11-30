@@ -32,7 +32,10 @@ const routes: Routes = [
     loadChildren:
       "./monster-generator/build-monster/build-monster.module#BuildMonsterPageModule"
   },
-  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' }
+  { path: 'settings', loadChildren: './settings/settings.module#SettingsPageModule' },
+  { path: 'templates', loadChildren: './monster-generator/build-monster/templates/templates.module#TemplatesPageModule' },
+  { path: 'traits', loadChildren: './monster-generator/build-monster/traits/traits.module#TraitsPageModule' },
+  { path: 'skills', loadChildren: './monster-generator/build-monster/skills/skills.module#SkillsPageModule' }
 ];
 
 @NgModule({
