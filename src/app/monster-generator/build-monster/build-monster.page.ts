@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { PickerController } from '@ionic/angular';
-import { PickerOptions } from '@ionic/core';
+import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { MonsterValueRef, Range } from '../monster-gen.model';
+import {ModifierPipe} from './monster-form-functions.model';
+
 
 @Component({
   selector: 'app-build-monster',
@@ -9,17 +11,39 @@ import { MonsterValueRef, Range } from '../monster-gen.model';
   styleUrls: ['./build-monster.page.scss'],
 })
 export class BuildMonsterPage implements OnInit {
+  // Alignment
   selectedAlignment;
   defaultAlignment;
   expandAlignmentPicker;
+
+  // Template
   selectedTemplate;
+  defaultTemplateIdx;
+
+  // Default picker for testing
   selectedPickerValue;
+
+  // Level - Determines default values calculated from gererateOptions
   selectedLevel;
+
   selectedSkill = {};
+
   selectedAbilityMod = {};
-  defaultAbilityMod;
+  abilityModDef = {}
+
+  defaultAbilityModIdx;
   selectedPerception;
-  defaultPerception;
+  defaultPerceptionIdx;
+
+  selectedAC;
+  defaultACIdx;
+
+  selectedHP;
+  defaultHPIdx;
+
+  selectedSavingThrows;
+  defaultSavingThrowsIdx;
+  
   monRef = new MonsterValueRef();
 
   constructor(private pickerCtrl: PickerController) {
@@ -56,7 +80,7 @@ export class BuildMonsterPage implements OnInit {
       { text: '23', value: 23 },
       { text: '24', value: 24 }
     ];
-    this.selectedLevel = await this.customPicker(options);
+    this.selectedLevel = await this.customPicker(options, null);
     /* this.customPicker(options).then(res => {
       this.selectedLevel = res;
       console.log(this.selectedLevel);
@@ -84,14 +108,14 @@ export class BuildMonsterPage implements OnInit {
   async skillPicker(skill: string) {
     let scaleMatrix = this.monRef.skills;
     //this.selectedSkill = await this.customPicker(options);
-    this.selectedSkill[skill] = await this.customPicker(this.generateOptions(scaleMatrix));
+    this.selectedSkill[skill] = await this.customPicker(this.generateOptions(scaleMatrix, null, null, false), null);
 
   }
 
   async perceptionPicker() {
     let scaleMatrix = this.monRef.perception;
 
-    this.selectedPerception = await this.customPicker(this.generateOptions(scaleMatrix));
+    this.selectedPerception = await this.customPicker(this.generateOptions(scaleMatrix, 'defaultTemplateIdx', null, true), this.defaultTemplateIdx);
 
     /*
     // Example using .then
@@ -104,47 +128,98 @@ export class BuildMonsterPage implements OnInit {
 
   async abilityModPicker(ability: string) {
     let scaleMatrix = this.monRef.abilityMod;
-    let options = this.generateOptions(scaleMatrix);
-    this.selectedAbilityMod[ability] = await this.customPicker(options);
+    let optionsInit = [
+      { text: '-10', value: -10 },
+      { text: '-9', value: -9 },
+      { text: '-8', value: -8 },
+      { text: '-7', value: -7 },
+      { text: '-6', value: -6 },
+      { text: '-4', value: -4 },
+      { text: '-3', value: -3 },
+      { text: '-2', value: -2 },
+      { text: '-1', value: -1 }
+    ];
+    let defaultIdxOffset = optionsInit.length;
+
+    let options = this.generateOptions(scaleMatrix, 'abilityModDef', ability, false);
+    for (var e in options){
+      optionsInit.push(options[e]); 
+    }
+    let defaultIdx = (this.abilityModDef[ability]) + defaultIdxOffset;
+    this.selectedAbilityMod[ability] = await this.customPicker(optionsInit, defaultIdx);
   }
 
-  generateOptions(scaleMatrixParam) {
-    console.log("GENERATE OPTIONS STARTED");
+  async acPicker() {
+    let scaleMatrix = this.monRef.ac;
+    let options = this.generateOptions(scaleMatrix, 'defaultACIdx', null, false);
+
+    this.selectedAC = await this.customPicker(options, this.defaultACIdx);
+  }
+
+  async hpPicker() {
+    let scaleMatrix = this.monRef.hp;
+    let options = this.generateOptions(scaleMatrix, 'defaultHPIdx', null, false);
+
+    this.selectedHP = await this.customPicker(options, this.defaultHPIdx);
+  }
+
+  async savingThrowsPicker() {
+    let scaleMatrix = this.monRef.savingThrows;
+    let options = this.generateOptions(scaleMatrix, 'defaultSavingThrowsIdx', null, false);
+
+    this.selectedSavingThrows = await this.customPicker(options, this.defaultSavingThrowsIdx);
+  }
+
+  generateOptions(scaleMatrixParam,varNameDefValue, varNameDefValueProp, addModifiers: boolean) {
+    console.log("Generating Options");
     if (!this.selectedLevel.value) return;
     let options = [];
     let levelIdx = this.selectedLevel.value+1;
     let range: Range;
     let scaleMatrix = scaleMatrixParam;
     range = this.monRef.getRange(scaleMatrix);
-
+    let idx = 0;
     for (let r = range.from; r != range.to; r++){
 
       // Does this value have a label?
       let scaling = this.monRef.getScalingFromLevel(scaleMatrix,levelIdx,r);
       let scalingLabel = this.monRef.getScalingLabel(scaling);
-      let selected = false;
+      //let selected = false;
       
       if (scaling === undefined){
-        options.push({selected: selected, text: '+'+r, value: r});
+        if (addModifiers){
+          options.push({text: '+'+r, value: r});
+        } else {
+          options.push({text: r, value: r});
+        }
+        idx++;
         continue
       }
       
-      if (scalingLabel === 'Moderate'){
-        selected = true;
-        options.push({selected: true, text: '+'+r+ ' - '+ this.monRef.getScalingLabelFromLevelScore(scaleMatrix,levelIdx,r), value: r});
-      }else {
-        options.push({text: '+'+r+ ' - '+ this.monRef.getScalingLabelFromLevelScore(scaleMatrix,levelIdx,r), value: r});
+      if (scalingLabel === 'Moderate' && varNameDefValue){
+        let varNameDevValueType = typeof this[varNameDefValue];
+        if (varNameDevValueType == 'object' && varNameDefValueProp){
+          this[varNameDefValue][varNameDefValueProp] = idx;
+        }else {
+          this[varNameDefValue] = idx;
+        }
+
+        
+        console.log('scalingLabel=',scalingLabel,varNameDefValue+'=',this[varNameDefValue]);
       }
-
-      console.log('scalingLabel=',scalingLabel,'|','value=',r,'|','selected=',selected);
-
       
+      if (addModifiers){
+        options.push({text: '+'+r+ ' - '+ this.monRef.getScalingLabelFromLevelScore(scaleMatrix,levelIdx,r), value: r});
+      } else {
+        options.push({text: r+ ' - '+ this.monRef.getScalingLabelFromLevelScore(scaleMatrix,levelIdx,r), value: r});
+      }
       
+      idx++;
     }
     return options;
   }
 
-  async customPicker(options) {
+  async customPicker(options: PickerColumnOption[],selectedIndex: number) {
     let opts: PickerOptions = {
       cssClass: 'monster-picker',
       buttons: [
@@ -160,6 +235,7 @@ export class BuildMonsterPage implements OnInit {
       columns: [
         {
           cssClass: 'monster-picker-column',
+          selectedIndex: selectedIndex || 0,
           align: 'left',
           name: 'col1',
           options: options
@@ -176,6 +252,12 @@ export class BuildMonsterPage implements OnInit {
         let col1 = await picker.getColumn('col1');
         selected = await col1.options[col1.selectedIndex];
         console.log('selected=',selected);
+
+        if(Math.sign(selected.value) == 1){
+          selected.modDisplayValue = '+'+selected.value;
+        } else {
+          selected.modDisplayValue = selected.value;
+        }
         res(selected);
       });
     });
@@ -183,6 +265,11 @@ export class BuildMonsterPage implements OnInit {
 
 
   async showBasicPicker() {
+    let pickColOpts: PickerColumnOption[] = [
+        { text: 'Angular', value: 'A' },
+        { text: 'Vue', value: 'B', selected: true },
+        { text: 'React', value: 'C' }
+      ];
     let opts: PickerOptions = {
       cssClass: 'monster-picker',
       buttons: [
@@ -197,12 +284,9 @@ export class BuildMonsterPage implements OnInit {
       columns: [
         {
           cssClass: 'monster-picker-column',
+          selectedIndex: 1, // THAT FUCKING WORKS
           name: 'framework',
-          options: [
-            { text: 'Angular', value: 'A' },
-            { text: 'Vue', value: 'B' },
-            { text: 'React', value: 'C' }
-          ]
+          options: pickColOpts
         }
       ]
     };

@@ -13,6 +13,9 @@
 
   <!-- <ion-img [src]="src\assets\images">
   </ion-img> -->
+  <ion-button class="testButton" (click)="showBasicPicker()"
+    >:D TEST BUTTON :D</ion-button
+  >
 
   <ion-grid>
     <ion-row>
@@ -202,7 +205,7 @@
           <ion-button
             *ngIf="selectedAbilityMod['str']"
             (click)="abilityModPicker('str')"
-            >STR +{{ selectedAbilityMod["str"].value }}</ion-button
+            >STR {{ selectedAbilityMod["str"].modDisplayValue }}</ion-button
           >
           <ion-button
             *ngIf="!selectedAbilityMod['dex']"
@@ -212,7 +215,7 @@
           <ion-button
             *ngIf="selectedAbilityMod['dex']"
             (click)="abilityModPicker('dex')"
-            >DEX +{{ selectedAbilityMod["dex"].value }}</ion-button
+            >DEX {{ selectedAbilityMod["dex"].value }}</ion-button
           >
           <ion-button
             *ngIf="!selectedAbilityMod['con']"
@@ -222,7 +225,7 @@
           <ion-button
             *ngIf="selectedAbilityMod['con']"
             (click)="abilityModPicker('con')"
-            >CON +{{ selectedAbilityMod["con"].value }}</ion-button
+            >CON {{ selectedAbilityMod["con"].value }}</ion-button
           >
         </div>
       </ion-col>
@@ -238,7 +241,7 @@
           <ion-button
             *ngIf="selectedAbilityMod['int']"
             (click)="abilityModPicker('int')"
-            >INT +{{ selectedAbilityMod["int"].value }}</ion-button
+            >INT {{ selectedAbilityMod["int"].value }}</ion-button
           >
           <ion-button
             *ngIf="!selectedAbilityMod['wis']"
@@ -248,7 +251,7 @@
           <ion-button
             *ngIf="selectedAbilityMod['wis']"
             (click)="abilityModPicker('wis')"
-            >WIS +{{ selectedAbilityMod["wis"].value }}</ion-button
+            >WIS {{ selectedAbilityMod["wis"].value }}</ion-button
           >
           <ion-button
             *ngIf="!selectedAbilityMod['cha']"
@@ -258,7 +261,7 @@
           <ion-button
             *ngIf="selectedAbilityMod['cha']"
             (click)="abilityModPicker('cha')"
-            >CHA +{{ selectedAbilityMod["cha"].value }}</ion-button
+            >CHA {{ selectedAbilityMod["cha"].value }}</ion-button
           >
         </div>
       </ion-col>
@@ -273,39 +276,45 @@
       </ion-col>
     </ion-row>
     <ion-row>
-        <ion-col size="6" size-md="3" offset-md="3">
-          <div class="picker-button-container">
-            <ion-button>AC</ion-button>
-          </div>
-          <div class="picker-value-container" text-center>
-            <ion-item>
-              <ion-input
-                *ngIf="selectedAC"
-                inputmode="numeric"
-                value="+{{ selectedAC.value }}"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-        <ion-col size="6" size-md="3">
-          <div class="picker-button-container">
-            <ion-button>HP</ion-button>
-          </div>
-          <div class="picker-value-container" text-center>
-            <ion-item>
-              <ion-input
-                *ngIf="selectedHP"
-                inputmode="numeric"
-                value="+{{ selectedHP.value }}"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-      </ion-row>
+      <ion-col size="6" size-md="3" offset-md="3">
+        <div class="picker-button-container">
+          <ion-button (click)="acPicker()">AC</ion-button>
+        </div>
+        <div class="picker-value-container" text-center>
+          <ion-item>
+            <ion-input
+              *ngIf="selectedAC"
+              inputmode="numeric"
+              value="+{{ selectedAC.value }}"
+            ></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+      <ion-col size="6" size-md="3">
+        <div class="picker-button-container">
+          <ion-button (click)="hpPicker()">HP</ion-button>
+        </div>
+        <div class="picker-value-container" text-center>
+          <ion-item>
+            <ion-input
+              *ngIf="selectedHP"
+              inputmode="numeric"
+              value="{{ selectedHP.value}}"
+            ></ion-input>
+            <!-- <ion-input
+              *ngIf="selectedHP && !Math.sign(selectedHP)"
+              inputmode="numeric"
+              value="{{ selectedHP.value }}"
+            ></ion-input> -->
+          </ion-item>
+        </div>
+      </ion-col>
+    </ion-row>
     <ion-row>
       <ion-col size="6" size-md="6" offset-md="3">
         <div class="picker-button-container">
-          <ion-button>Saving Throws</ion-button>
+          <ion-button
+          (click)="savingThrowsPicker()">Saving Throws</ion-button>
         </div>
         <div class="picker-value-container" text-center>
           <ion-item>
@@ -319,90 +328,90 @@
       </ion-col>
     </ion-row>
     <ion-row>
-        <ion-col size="6" size-md="3" offset-md="3">
-          <div class="picker-button-container">
-            <ion-button>Resistances</ion-button>
-          </div>
-          <div class="picker-value-container" text-center>
-            <ion-item>
-              <ion-input
-                *ngIf="selectedResistances"
-                inputmode="numeric"
-                value="+{{ selectedResistances.value }}"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-        <ion-col size="6" size-md="3">
-          <div class="picker-button-container">
-            <ion-button>Weaknesses</ion-button>
-          </div>
-          <div class="picker-value-container" text-center>
-            <ion-item>
-              <ion-input
-                *ngIf="selectedWeaknesses"
-                inputmode="numeric"
-                value="+{{ selectedWeaknesses.value }}"
-              ></ion-input>
-            </ion-item>
-          </div>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-          <ion-col size="12" offset-md="3" size-md="6">
-            <ion-item-divider>
-              <ion-label>
-                Offence
-              </ion-label>
-            </ion-item-divider>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-            <ion-col size="6" size-md="3" offset-md="3">
-              <div class="picker-button-container">
-                <ion-button>ATK Bonus</ion-button>
-              </div>
-              <div class="picker-value-container" text-center>
-                <ion-item>
-                  <ion-input
-                    *ngIf="selectedAtkBonus"
-                    inputmode="numeric"
-                    value="+{{ selectedAtkBonus.value }}"
-                  ></ion-input>
-                </ion-item>
-              </div>
-            </ion-col>
-            <ion-col size="6" size-md="3">
-              <div class="picker-button-container">
-                <ion-button>Strike Bonus</ion-button>
-              </div>
-              <div class="picker-value-container" text-center>
-                <ion-item>
-                  <ion-input
-                    *ngIf="selectedStrikeBonus"
-                    inputmode="numeric"
-                    value="+{{ selectedStrikeBonus.value }}"
-                  ></ion-input>
-                </ion-item>
-              </div>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-              <ion-col size="12" offset-md="3" size-md="6">
-                <ion-item-divider>
-                  <ion-label>
-                    Details
-                  </ion-label>
-                </ion-item-divider>
-              </ion-col>
-            </ion-row>
-          <ion-row>
-              <ion-col size="6" offset-md="3" size-md="3">
-                <ion-button>Trait Selection</ion-button>
-              </ion-col>
-              <ion-col text-center size="6" size-md="3">
-                <p *ngIf="selectedSkill['test']">+{{ selectedSkill["test"].value }}</p>
-              </ion-col>
-            </ion-row>
+      <ion-col size="6" size-md="3" offset-md="3">
+        <div class="picker-button-container">
+          <ion-button>Resistances</ion-button>
+        </div>
+        <div class="picker-value-container" text-center>
+          <ion-item>
+            <ion-input
+              *ngIf="selectedResistances"
+              inputmode="numeric"
+              value="+{{ selectedResistances.value }}"
+            ></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+      <ion-col size="6" size-md="3">
+        <div class="picker-button-container">
+          <ion-button>Weaknesses</ion-button>
+        </div>
+        <div class="picker-value-container" text-center>
+          <ion-item>
+            <ion-input
+              *ngIf="selectedWeaknesses"
+              inputmode="numeric"
+              value="+{{ selectedWeaknesses.value }}"
+            ></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" offset-md="3" size-md="6">
+        <ion-item-divider>
+          <ion-label>
+            Offence
+          </ion-label>
+        </ion-item-divider>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6" size-md="3" offset-md="3">
+        <div class="picker-button-container">
+          <ion-button>ATK Bonus</ion-button>
+        </div>
+        <div class="picker-value-container" text-center>
+          <ion-item>
+            <ion-input
+              *ngIf="selectedAtkBonus"
+              inputmode="numeric"
+              value="+{{ selectedAtkBonus.value }}"
+            ></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+      <ion-col size="6" size-md="3">
+        <div class="picker-button-container">
+          <ion-button>Strike Bonus</ion-button>
+        </div>
+        <div class="picker-value-container" text-center>
+          <ion-item>
+            <ion-input
+              *ngIf="selectedStrikeBonus"
+              inputmode="numeric"
+              value="+{{ selectedStrikeBonus.value }}"
+            ></ion-input>
+          </ion-item>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12" offset-md="3" size-md="6">
+        <ion-item-divider>
+          <ion-label>
+            Details
+          </ion-label>
+        </ion-item-divider>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="6" offset-md="3" size-md="3">
+        <ion-button>Trait Selection</ion-button>
+      </ion-col>
+      <ion-col text-center size="6" size-md="3">
+        <p *ngIf="selectedSkill['test']">+{{ selectedSkill["test"].value }}</p>
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

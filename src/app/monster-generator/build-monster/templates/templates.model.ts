@@ -11,6 +11,6 @@ export class Templates {
   selectedTemplates: string[];
   pageMode: string; // 'picker' | 'list'
   readonly templatesRef: TemplateItem[] = [
-
+    
   ];
 }

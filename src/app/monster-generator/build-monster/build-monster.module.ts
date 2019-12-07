@@ -17,6 +17,8 @@ import { CdkTreeModule } from '@angular/cdk/tree';
 import { PortalModule } from '@angular/cdk/portal';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
+import { ModifierPipe } from './monster-form-functions.model';
+
 
 const routes: Routes = [
   {
@@ -75,7 +77,8 @@ const routes: Routes = [
     MatTreeModule,
     PortalModule,
     ScrollingModule,
+    /* ModifierPipe */
   ],
-  declarations: [BuildMonsterPage]
+  declarations: [BuildMonsterPage,/* ModifierPipe */]
 })
 export class BuildMonsterPageModule {}
