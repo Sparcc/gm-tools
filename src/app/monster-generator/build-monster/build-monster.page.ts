@@ -3,6 +3,7 @@ import { PickerController } from '@ionic/angular';
 import { PickerOptions, PickerColumnOption } from '@ionic/core';
 import { MonsterValueRef, Range } from '../monster-gen.model';
 import {ModifierPipe} from './monster-form-functions.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 
 @Component({
@@ -11,6 +12,9 @@ import {ModifierPipe} from './monster-form-functions.model';
   styleUrls: ['./build-monster.page.scss'],
 })
 export class BuildMonsterPage implements OnInit {
+  // Form
+  form: FormGroup;
+
   // Alignment
   selectedAlignment;
   defaultAlignment;
@@ -43,6 +47,18 @@ export class BuildMonsterPage implements OnInit {
 
   selectedSavingThrows;
   defaultSavingThrowsIdx;
+
+  selectedResistances;
+  defaultResistancesIdx;
+
+  selectedWeaknesses;
+  defaultWeaknessesIdx;
+
+  selectedAtkBonus;
+  defaultAtkBonusIdx;
+
+  selectedStrikeBonus;
+  defaultStrikeBonusIdx;
   
   monRef = new MonsterValueRef();
 
@@ -52,6 +68,20 @@ export class BuildMonsterPage implements OnInit {
   }
 
   ngOnInit() {
+    this.form = new FormGroup({
+      perceptionNotes: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.maxLength(100)]
+      }),
+      ACNotes: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.maxLength(100)]
+      }),
+      HPNotes: new FormControl(null, {
+        updateOn: 'blur',
+        validators: [Validators.maxLength(100)]
+      })
+    });
   }
 
   async levelPicker() {
@@ -168,6 +198,34 @@ export class BuildMonsterPage implements OnInit {
     let options = this.generateOptions(scaleMatrix, 'defaultSavingThrowsIdx', null, false);
 
     this.selectedSavingThrows = await this.customPicker(options, this.defaultSavingThrowsIdx);
+  }
+
+  async resistancesPicker() {
+    let scaleMatrix = this.monRef.savingThrows;
+    let options = this.generateOptions(scaleMatrix, 'defaultResistancesIdx', null, false);
+
+    this.selectedResistances = await this.customPicker(options, this.defaultResistancesIdx);
+  }
+
+  async weaknessesPicker() {
+    let scaleMatrix = this.monRef.savingThrows;
+    let options = this.generateOptions(scaleMatrix, 'defaultWeaknessesIdx', null, false);
+
+    this.selectedWeaknesses = await this.customPicker(options, this.defaultWeaknessesIdx);
+  }
+
+  async atkBonusPicker() {
+    let scaleMatrix = this.monRef.savingThrows;
+    let options = this.generateOptions(scaleMatrix, 'defaultAtkBonusIdx', null, false);
+
+    this.selectedAtkBonus = await this.customPicker(options, this.defaultAtkBonusIdx);
+  }
+
+  async strikeBonusPicker() {
+    let scaleMatrix = this.monRef.savingThrows;
+    let options = this.generateOptions(scaleMatrix, 'defaultStrikeBonusIdx', null, false);
+
+    this.selectedStrikeBonus = await this.customPicker(options, this.defaultStrikeBonusIdx);
   }
 
   generateOptions(scaleMatrixParam,varNameDefValue, varNameDefValueProp, addModifiers: boolean) {
